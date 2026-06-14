@@ -1,0 +1,33 @@
+Shape: (249137, 31)
+
+1. FR
+2. Part Number
+3. Description
+4. WIPNo
+5. Invoice
+6. Date
+7. Account
+8. Retail Val
+9. Sale val
+10. Disc val
+11. Disc %
+12. Cost val
+13. Profit
+14. PC
+15. Qty
+16. DIV
+17. BR
+18. D
+19. AT
+20. AC
+21. A
+22. ST
+23. MLI
+24. DC
+25. LC
+26. SC
+27. ACLS
+28. DVC
+29. VLP
+30. VNP
+31. L

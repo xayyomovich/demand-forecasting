@@ -1,0 +1,10 @@
+{
+    "model_name": "xgboost_log_lag12_all651",
+    "target": "log1p(net_qty)",
+    "prediction_inverse": "expm1(prediction_log)",
+    "training_rows": 8463,
+    "feature_count": 18,
+    "latest_real_month": "2026-01",
+    "forecast_horizon_months": 6,
+    "important_note": "This model is saved for ML forecasting and SHAP explainability. The lag_1 baseline had better final all-parts MAE."
+}

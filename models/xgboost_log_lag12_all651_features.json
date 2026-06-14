@@ -1,0 +1,20 @@
+[
+    "year",
+    "month_number",
+    "quarter",
+    "month_sin",
+    "month_cos",
+    "lag_1",
+    "lag_2",
+    "lag_3",
+    "lag_12",
+    "sold_qty_lag_1",
+    "return_qty_lag_1",
+    "transaction_count_lag_1",
+    "rolling_mean_3",
+    "rolling_mean_6",
+    "rolling_std_3",
+    "return_ratio",
+    "return_ratio_lag_1",
+    "is_high_demand_month_analysis_only"
+]

@@ -1,0 +1,504 @@
+Column Explanations for DB_31_24&25.xlsb
+=========================================
+
+Purpose of this document
+------------------------
+This file explains the meaning and diploma-project relevance of each column found in the raw dealership sales dataset. The dataset appears to be an Excel Binary Workbook (.xlsb) containing automotive parts/service transaction records. Some columns are clearly understandable from the values and business context, while some coded columns need confirmation from the company, ERP system, or data owner.
+
+
+1. FR
+-----
+Likely meaning:
+Franchise, brand, or product group code.
+
+Examples:
+CJ, LU
+
+Possible interpretation:
+CJ may refer to Jeep/Chrysler parts. LU may refer to lubricants.
+
+Importance:
+Useful for grouping products by brand/category. In the diploma project, FR can be used for filtering, analysis, dashboard grouping, and possibly as a model feature.
+
+Forecasting relevance:
+Medium to high. Demand patterns may differ by franchise/category.
+
+
+2. Part Number
+--------------
+Meaning:
+Unique identifier/code for each spare part or product.
+
+Examples:
+CJ6AD72RXFAH, LU481371111
+
+Importance:
+This is one of the most important columns. It identifies what product was sold or returned.
+
+Forecasting relevance:
+Very high. For part-level demand forecasting, this is the main product key.
+
+
+3. Description
+--------------
+Meaning:
+Human-readable product or part name.
+
+Examples:
+MOULDING WHEEL FLARE(JL), MOBIL SUPER 3000XE 5W30 500ML
+
+Importance:
+Useful for understanding the part number and making reports/dashboard outputs readable.
+
+Forecasting relevance:
+Low to medium. Usually not used directly in the first model, but useful for interpretation and presentation.
+
+
+4. WIPNo
+--------
+Likely meaning:
+Work In Progress number, job card number, service order number, or internal transaction reference.
+
+Importance:
+Helps identify which service/job/invoice transaction the row belongs to.
+
+Forecasting relevance:
+Low. Usually not used as a forecasting feature because it is an operational ID, not a demand driver.
+
+
+5. Invoice
+----------
+Meaning:
+Invoice number or billing document number.
+
+Note:
+Excel may display large invoice numbers in scientific notation, such as 4.2E+07. Python/pandas may show the full number instead.
+
+Importance:
+Useful for tracing transactions and checking duplicates or returns.
+
+Forecasting relevance:
+Low. It is mainly an identifier, not a demand feature.
+
+
+6. Date
+-------
+Meaning:
+Transaction date.
+
+Note:
+In Python, the date may appear as an Excel serial number such as 45350. This should be converted using:
+pd.to_datetime(df["Date"], origin="1899-12-30", unit="D")
+
+Importance:
+Essential for time-series analysis. It allows the data to be grouped by day, week, month, quarter, and year.
+
+Forecasting relevance:
+Very high. Forecasting is impossible without a valid date column.
+
+
+7. Account
+----------
+Likely meaning:
+Customer account code, internal account code, or buyer identifier.
+
+Examples:
+M0000193, I3101835, I3154025
+
+Importance:
+Can help identify customer behavior, repeat buyers, wholesale vs retail behavior, or internal accounts.
+
+Forecasting relevance:
+Low for v1. It may be useful in advanced customer-level demand analysis, but it adds complexity.
+
+
+8. Retail Val
+-------------
+Meaning:
+Retail/list value of the item before discount.
+
+Importance:
+Shows the standard selling value before discounting.
+
+Forecasting relevance:
+Medium. Useful for business analysis and pricing/discount studies, but not the main demand target.
+
+
+9. Sale val
+-----------
+Meaning:
+Actual sales value after discount.
+
+Importance:
+Shows the actual revenue recorded for the transaction.
+
+Forecasting relevance:
+Medium to high if the project later includes revenue forecasting. For the first demand model, quantity is more important.
+
+
+10. Disc val
+------------
+Meaning:
+Discount value.
+
+Example:
+Retail Val 1358, Sale val 883, Disc val 475.
+
+Importance:
+Shows how much value was discounted from the retail price.
+
+Forecasting relevance:
+Medium. Discounts may influence demand, but this should be used carefully because future discount values may not be known at prediction time.
+
+
+11. Disc %
+----------
+Meaning:
+Discount percentage.
+
+Importance:
+Shows the percentage discount applied to the sale.
+
+Forecasting relevance:
+Medium. Can help explain sales behavior, but may cause data leakage if future discounts are unknown.
+
+
+12. Cost val
+------------
+Meaning:
+Cost value of the sold part for the business.
+
+Importance:
+Used to understand margins and profitability.
+
+Forecasting relevance:
+Medium. Useful for business prioritization, such as focusing forecasts on high-profit parts.
+
+
+13. Profit
+----------
+Meaning:
+Profit from the transaction.
+
+Likely formula:
+Profit = Sale val - Cost val
+
+Importance:
+Important for business impact analysis. A part with lower quantity but higher profit may be more important than a high-volume low-profit item.
+
+Forecasting relevance:
+Medium. Not the main target for v1, but useful for ranking important parts.
+
+
+14. PC
+------
+Likely meaning:
+Product code, price code, profit code, or product class.
+
+Importance:
+This is a coded business field. It may represent a classification used inside the dealership or ERP system.
+
+Forecasting relevance:
+Unknown until confirmed. It may become useful if it represents product category or price class.
+
+
+15. Qty
+-------
+Meaning:
+Quantity sold or returned.
+
+Examples:
+Qty = 1 means one item sold.
+Qty = 16 means sixteen items sold.
+Qty = -1 means a return, credit note, or reversal.
+
+Importance:
+This is the main target variable for demand forecasting.
+
+Forecasting relevance:
+Very high. Monthly demand will usually be calculated as sum of Qty by Month and Part Number.
+
+
+16. DIV
+-------
+Likely meaning:
+Division code.
+
+Example:
+31
+
+Importance:
+May identify the business division, department, or company unit.
+
+Forecasting relevance:
+Low if it has only one constant value. Medium if it contains multiple meaningful divisions.
+
+
+17. BR
+------
+Likely meaning:
+Branch code.
+
+Examples:
+41, 13
+
+Importance:
+Identifies which branch/location sold the item.
+
+Forecasting relevance:
+High if forecasting by branch. Medium if forecasting total demand across all branches.
+
+
+18. D
+-----
+Likely meaning:
+Department, document type, demand/source code, or transaction category.
+
+Examples:
+H, E, Q
+
+Importance:
+This is a coded business field and needs confirmation.
+
+Forecasting relevance:
+Unknown to medium. If it identifies transaction type or department, it may help filter valid sales.
+
+
+19. AT
+------
+Likely meaning:
+Account type, activity type, or transaction type.
+
+Examples:
+I or blank
+
+Importance:
+Needs confirmation from the data owner or ERP documentation.
+
+Forecasting relevance:
+Unknown. It may help separate transaction categories.
+
+
+20. AC
+------
+Likely meaning:
+Account category, activity code, or sales/transaction classification.
+
+Examples:
+U, I
+
+Importance:
+Needs confirmation. It may classify the type of transaction or customer/account.
+
+Forecasting relevance:
+Unknown to medium depending on its real meaning.
+
+
+21. A
+-----
+Likely meaning:
+Action/status code, adjustment flag, or account/sales code.
+
+Examples:
+R, I
+
+Importance:
+Could be important if it identifies returns, invoice status, or transaction type.
+
+Forecasting relevance:
+Unknown to medium. Needs validation before using in modeling.
+
+
+22. ST
+------
+Likely meaning:
+Status code.
+
+Examples:
+R, I
+
+Importance:
+May indicate whether the transaction is retail, internal, issued, returned, or another status.
+
+Forecasting relevance:
+Medium if it helps filter valid demand transactions.
+
+
+23. MLI
+-------
+Likely meaning:
+Main line indicator, material line indicator, or transaction line status.
+
+Examples:
+A
+
+Importance:
+Could describe the line/item status in the invoice or service system.
+
+Forecasting relevance:
+Low if constant. Medium if it separates valid/invalid transaction lines.
+
+
+24. DC
+------
+Likely meaning:
+Discount code, department code, dealer code, or damage/claim code.
+
+Examples:
+0, FA4, FE2
+
+Importance:
+This is a coded field and may explain pricing, discounting, or transaction classification.
+
+Forecasting relevance:
+Unknown. Probably not needed for v1 unless it identifies important sales categories.
+
+
+25. LC
+------
+Likely meaning:
+Location code, line code, or labor code.
+
+Examples:
+0
+
+Importance:
+Needs confirmation. If it mostly contains 0, it may have low value.
+
+Forecasting relevance:
+Low unless it contains meaningful non-zero categories.
+
+
+26. SC
+------
+Likely meaning:
+Sub-code, service code, sales code, or stock code.
+
+Examples:
+FA40, FE27
+
+Importance:
+May provide more detailed classification connected to DC or service/discount logic.
+
+Forecasting relevance:
+Unknown. Not needed for the first forecasting version unless confirmed useful.
+
+
+27. ACLS
+--------
+Likely meaning:
+Account class or customer class.
+
+Importance:
+Many rows appear blank, so this column may have high missingness.
+
+Forecasting relevance:
+Low for v1 unless it contains useful customer segmentation.
+
+
+28. DVC
+-------
+Likely meaning:
+Division code, device code, discount voucher code, or dealer/vendor code.
+
+Importance:
+Many rows appear blank. Needs confirmation.
+
+Forecasting relevance:
+Low for v1 unless meaningful values exist.
+
+
+29. VLP
+-------
+Likely meaning:
+Value/price/list-related code or numeric flag.
+
+Examples:
+0.0
+
+Importance:
+If this column is mostly zero, it may not add value.
+
+Forecasting relevance:
+Low unless it has meaningful variation.
+
+
+30. VNP
+-------
+Likely meaning:
+Value/net price-related code or numeric flag.
+
+Examples:
+0.0
+
+Importance:
+If this column is mostly zero, it may not add value.
+
+Forecasting relevance:
+Low unless it has meaningful variation.
+
+
+31. L
+-----
+Likely meaning:
+Line number, line flag, or transaction line indicator.
+
+Examples:
+1
+
+Importance:
+May identify line records in the transaction file. If constant, it has little analytical use.
+
+Forecasting relevance:
+Low if constant.
+
+
+Most important columns for the diploma project
+----------------------------------------------
+Core forecasting columns:
+Date
+Part Number
+Qty
+
+Business interpretation columns:
+Description
+FR
+BR
+
+Business value columns:
+Sale val
+Retail Val
+Cost val
+Profit
+
+Mostly operational or coded columns:
+WIPNo
+Invoice
+Account
+PC
+DIV
+D
+AT
+AC
+A
+ST
+MLI
+DC
+LC
+SC
+ACLS
+DVC
+VLP
+VNP
+L
+
+
+Recommended next step
+---------------------
+Create a column profiling report that shows:
+1. Missing percentage for every column.
+2. Number of unique values for every column.
+3. Top 10 most common values for coded columns.
+4. Whether each column should be used, ignored, or investigated.
+
+This will turn the unknown coded columns into a clear data dictionary for the diploma.

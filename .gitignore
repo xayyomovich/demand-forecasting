@@ -1,0 +1,36 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Raw source data — not needed by the app, may contain sensitive business data
+DB_31_24&25.xlsb
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Claude Code session files
+.claude/
+
+# Excel temporary lock files
+~$*.xlsx
+~$*.xls
+~$*.xlsb
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
