@@ -1,0 +1,20 @@
+{
+    "model_name": "xgboost_log_target_v2",
+    "data_range": "2023-01 to 2026-01",
+    "forecastable_parts": 1001,
+    "train_rows": 16016,
+    "validation_rows": 3003,
+    "test_rows": 5005,
+    "test_months": [
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01"
+    ],
+    "target": "log1p(net_qty clipped at 0)",
+    "feature_count": 38,
+    "best_baseline_mae": 22.82817182817183,
+    "xgboost_mae": 25.52484760951329,
+    "improvement_vs_best_baseline_percent": -11.812929224641385
+}
